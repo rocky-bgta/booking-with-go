@@ -68,20 +68,20 @@
 <div class="container-fluid">
     <div>
         <div class="row">
-            <div class="col">
+            <div class="col-md-8 offset-md-2">
                 <h1 class="mt-5">Search for Availability</h1>
                 <form action="reservation.html", method="get">
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col mb-3">
                                 <label for="start_date" class="form-label">Starting Date</label>
-                                <input type="text" class="form-control" id="start_date" name="start_date"
+                                <input required type="date" class="form-control" id="start_date" name="start_date"
                                 aria-describedby="startDateHelp" placeholder="YYYY-MM-DD">
                                 <div id="startDateHelp" class="form-text">Enter your starting date in the form of YYYY-MM-DD</div>
                             </div>
                             <div class="col mb-3">
                                 <label for="end_date" class="form-label">Ending Date</label>
-                                <input type="text" class="form-control" id="end_date" name="end_date"
+                                <input required type="date" class="form-control" id="end_date" name="end_date"
                                 aria-describedby="endDateHelp" placeholder="YYYY-MM-DD">
                                 <div id="endDateHelp" class="form-text">Enter your ending date in the form of YYYY-MM-DD</div>
                             </div>
@@ -89,8 +89,6 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
-
-
             </div>
         </div>
     </div>
