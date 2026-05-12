@@ -3,17 +3,16 @@ package main
 import (
 	"net/http"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"github.com/rocky_bgta/booking-with-go/pkg/config"
 	"github.com/rocky_bgta/booking-with-go/pkg/handlers"
 )
 
-func router(app *config.AppConfig) http.Handler {
+func routes(app *config.AppConfig) http.Handler {
 	mux := chi.NewRouter()
 
 	mux.Use(middleware.Recoverer)
-
 	mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
@@ -21,8 +20,7 @@ func router(app *config.AppConfig) http.Handler {
 	mux.Get("/about", handlers.Repo.About)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
-	mux.Handle("/static/*", http.StripPrefix("/static/", fileServer))
+	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
 	return mux
-
 }
