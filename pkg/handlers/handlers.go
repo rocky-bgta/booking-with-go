@@ -77,7 +77,10 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	start := r.Form.Get("start")
 	end := r.Form.Get("end")
 
-	w.Write([]byte(fmt.Sprintf("start date is %s and end is %s", start, end)))
+	_, err := w.Write([]byte(fmt.Sprintf("start date is %s and end is %s", start, end)))
+	if err != nil {
+		return
+	}
 }
 
 // Contact renders the contact page
