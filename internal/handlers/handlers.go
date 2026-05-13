@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/rocky_bgta/booking-with-go/pkg/config"
-	"github.com/rocky_bgta/booking-with-go/pkg/models"
-	"github.com/rocky_bgta/booking-with-go/pkg/render"
+	"github.com/rocky_bgta/booking-with-go/internal/config"
+	"github.com/rocky_bgta/booking-with-go/internal/models"
+	"github.com/rocky_bgta/booking-with-go/internal/render"
 )
 
 // Repo the repository used by the handlers

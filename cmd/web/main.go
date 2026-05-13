@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/rocky_bgta/booking-with-go/pkg/config"
-	"github.com/rocky_bgta/booking-with-go/pkg/handlers"
-	"github.com/rocky_bgta/booking-with-go/pkg/render"
+	"github.com/rocky_bgta/booking-with-go/internal/config"
+	"github.com/rocky_bgta/booking-with-go/internal/handlers"
+	"github.com/rocky_bgta/booking-with-go/internal/render"
 )
 
 const portNumber = ":8080"
