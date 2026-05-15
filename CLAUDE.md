@@ -2,6 +2,26 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Environment
+
+Non-essential model calls are disabled in this project.
+Run this before starting: `export DISABLE_NON_ESSENTIAL_MODEL_CALLS=1`
+
+## Compact
+
+When compacting, preserve:
+- Current task goal
+- Files changed
+- Commands already run
+- Failing tests and exact errors
+- Decisions made
+- Next action list
+
+Drop:
+- Old exploration paths
+- Repeated logs
+- Irrelevant discussion
+
 ## Commands
 
 ```bash
