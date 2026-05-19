@@ -22,9 +22,10 @@ Drop:
 - Repeated logs
 - Irrelevant discussion
 
-## Model
+[//]: # (## Model)
 
-Always use claude-haiku-4-5 for all tasks unless explicitly asked otherwise.
+[//]: # ()
+[//]: # (Always use claude-haiku-4-5 for all tasks unless explicitly asked otherwise.)
 
 ## Commands
 
