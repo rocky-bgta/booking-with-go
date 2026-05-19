@@ -32,8 +32,12 @@ func TestNewHandlers(t *testing.T) {
 	ts := httptest.NewTLSServer(routes)
 	defer ts.Close()
 
+	t.Logf("Starting test server at: %s\n", ts.URL)
+
 	for _, e := range theTests {
 		t.Run(e.name, func(t *testing.T) {
+			t.Logf("[%s] Testing %s %s", e.name, e.method, e.url)
+
 			if e.method == "GET" {
 				resp, err := ts.Client().Get(ts.URL + e.url)
 				if err != nil {
@@ -41,8 +45,12 @@ func TestNewHandlers(t *testing.T) {
 				}
 				defer resp.Body.Close()
 
+				t.Logf("[%s] Response status: %d (expected: %d)", e.name, resp.StatusCode, e.expectedStatusCode)
+
 				if resp.StatusCode != e.expectedStatusCode {
 					t.Errorf("%s %s: expected status %d, got %d", e.method, e.url, e.expectedStatusCode, resp.StatusCode)
+				} else {
+					t.Logf("[%s] ✓ PASS", e.name)
 				}
 
 			} else if e.method == "POST" {
