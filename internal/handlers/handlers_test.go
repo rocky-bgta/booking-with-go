@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 )
 
@@ -20,44 +21,59 @@ var theTests = []struct {
 }{
 	{"home", "/", "GET", []postData{}, http.StatusOK},
 	{"about", "/about", "GET", []postData{}, http.StatusOK},
-	{"gq", "/generals-quarters", "GET", []postData{}, http.StatusOK},
-	{"ms", "/majors-suite", "GET", []postData{}, http.StatusOK},
-	{"sa", "/search-availability", "GET", []postData{}, http.StatusOK},
+	{"generals-quarters", "/generals-quarters", "GET", []postData{}, http.StatusOK},
+	{"majors-suite", "/majors-suite", "GET", []postData{}, http.StatusOK},
+	{"search-availability", "/search-availability", "GET", []postData{}, http.StatusOK},
 	{"contact", "/contact", "GET", []postData{}, http.StatusOK},
-	{"res", "/make-reservation", "GET", []postData{}, http.StatusOK},
+	{"make-res", "/make-reservation", "GET", []postData{}, http.StatusOK},
+	{"post-search-availability", "/search-availability", "Post", []postData{
+		{key: "start", value: "2020-01-01"},
+		{key: "end", value: "2020-01-02"},
+	}, http.StatusOK},
+	{"post-search-availability-json", "/search-availability-json", "Post", []postData{
+		{key: "start", value: "2020-01-01"},
+		{key: "end", value: "2020-01-02"},
+	}, http.StatusOK},
+	{"make-reservation", "/make-reservation", "Post", []postData{
+		{key: "first_name", value: "John"},
+		{key: "last_name", value: "Smith"},
+		{key: "email", value: "me@here.com"},
+		{key: "phone", value: "555-555-5555"},
+	}, http.StatusOK},
 }
 
-func TestNewHandlers(t *testing.T) {
+func TestHandlers(t *testing.T) {
 	routes := getRoutes()
+
 	ts := httptest.NewTLSServer(routes)
 	defer ts.Close()
 
-	t.Logf("Starting test server at: %s\n", ts.URL)
-
 	for _, e := range theTests {
-		t.Run(e.name, func(t *testing.T) {
-			t.Logf("[%s] Testing %s %s", e.name, e.method, e.url)
-
-			if e.method == "GET" {
-				resp, err := ts.Client().Get(ts.URL + e.url)
-				if err != nil {
-					t.Fatalf("request failed: %v", err)
-				}
-				defer resp.Body.Close()
-
-				t.Logf("[%s] Response status: %d (expected: %d)", e.name, resp.StatusCode, e.expectedStatusCode)
-
-				if resp.StatusCode != e.expectedStatusCode {
-					t.Errorf("%s %s: expected status %d, got %d", e.method, e.url, e.expectedStatusCode, resp.StatusCode)
-				} else {
-					t.Logf("[%s] ✓ PASS", e.name)
-				}
-
-			} else if e.method == "POST" {
-				// POST test cases can be implemented here if needed
-				t.Skip("POST test cases not yet implemented")
+		if e.method == "GET" {
+			resp, err := ts.Client().Get(ts.URL + e.url)
+			if err != nil {
+				t.Log(err)
+				t.Fatal(err)
 			}
-		})
-	}
 
+			if resp.StatusCode != e.expectedStatusCode {
+				t.Errorf("for %s expected %d but got %d", e.name, e.expectedStatusCode, resp.StatusCode)
+			}
+		} else {
+			values := url.Values{}
+			for _, x := range e.params {
+				values.Add(x.key, x.value)
+			}
+
+			resp, err := ts.Client().PostForm(ts.URL+e.url, values)
+			if err != nil {
+				t.Log(err)
+				t.Fatal(err)
+			}
+
+			if resp.StatusCode != e.expectedStatusCode {
+				t.Errorf("for %s expected %d but got %d", e.name, e.expectedStatusCode, resp.StatusCode)
+			}
+		}
+	}
 }
