@@ -32,6 +32,7 @@ func TestRenderTemplate(t *testing.T) {
 	}
 
 	app.TemplateCache = tc
+	app.UseCache = true
 
 	r, err := getSession()
 	if err != nil {
