@@ -1,10 +1,57 @@
-# Booking and Reservation System
+# Booking
 
-This is a repository for booking and reservations project.
+A Go web application using the chi router.
 
-- Build in Go version 1.16.
-- Uses the [chi router](github.com/go-chi/chi/v5)
-- Uses [alex edwards SCS](https://github.com/alexedwards/scs/v2)
-- Uses [nosurf](https://github.com/justinas/nosurf)
-- Run all tests: `go test ./...`
-- Run all tests with coverage: `go test -coverprofile="coverage.out" ./cmd/web && go tool cover -html="coverage.out"`
+## Prerequisites
+
+- Go 1.21+
+
+## Running the Application
+
+### Option 1 — Batch script (cmd)
+
+```bat
+run.bat
+```
+
+### Option 2 — PowerShell
+
+```powershell
+.\run.bat
+```
+
+### Option 3 — Go directly (no build step)
+
+```powershell
+go run ./cmd/web/
+```
+
+The server starts on **http://localhost:8080**.
+
+## Build Only
+
+```powershell
+go build -o bookings.exe ./cmd/web/
+.\bookings.exe
+```
+
+## Tests
+
+```powershell
+# All packages
+go test ./...
+
+# Single package
+go test ./internal/forms/
+
+# Verbose
+go test -v ./...
+```
+
+## Other Commands
+
+```powershell
+go fmt ./...   # format code
+go vet ./...   # lint
+go mod tidy    # tidy dependencies
+```
