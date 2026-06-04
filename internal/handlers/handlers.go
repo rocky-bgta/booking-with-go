@@ -6,10 +6,13 @@ import (
 	"net/http"
 
 	"github.com/rocky_bgta/booking-with-go/internal/config"
+	"github.com/rocky_bgta/booking-with-go/internal/driver"
 	"github.com/rocky_bgta/booking-with-go/internal/forms"
 	"github.com/rocky_bgta/booking-with-go/internal/helpers"
 	"github.com/rocky_bgta/booking-with-go/internal/models"
 	"github.com/rocky_bgta/booking-with-go/internal/render"
+	"github.com/rocky_bgta/booking-with-go/internal/repository"
+	"github.com/rocky_bgta/booking-with-go/internal/repository/dbrepo"
 )
 
 // Repo the repository used by the handlers
@@ -18,12 +21,14 @@ var Repo *Repository
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
