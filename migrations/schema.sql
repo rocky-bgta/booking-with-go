@@ -3,7 +3,7 @@
 --
 
 
--- Dumped from database version 14.23 (Debian 14.23-1.pgdg13+1)
+-- Dumped from database version 10.1
 -- Dumped by pg_dump version 18.4
 
 SET statement_timeout = 0;
@@ -28,8 +28,6 @@ SET row_security = off;
 ALTER SCHEMA public OWNER TO postgres;
 
 SET default_tablespace = '';
-
-SET default_table_access_method = heap;
 
 --
 -- Name: reservations; Type: TABLE; Schema: public; Owner: postgres
